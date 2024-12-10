@@ -1,12 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import Home from './src/screens/Home';
+import Login from './src/screens/Login';
+import TypesScreen from './src/screens/TypesScreen';
+import ProductsScreen from './src/screens/ProductsScreens';
+
+
+const AppStack = createStackNavigator();
+
+
+const types = [{ name: "Lanches" },{ name: "Japones" },{ name: "Sobremesas" },{ name: "Bebidas"}, 
+  { name: "Massas"}, { name: "Saladas"},{ name: "Carnes" },{ name: "Vegetariano"}, { name: "Vegano"}];
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+        <AppStack.Navigator>
+            <AppStack.Screen name="Home" component={Home} />
+            <AppStack.Screen name="Login" component={Login} />
+            <AppStack.Screen name="Types" component={TypesScreen} initialParams={{types}}/>
+            <AppStack.Screen name="Products" component={ProductsScreen} />
+        </AppStack.Navigator>
+    </NavigationContainer>
   );
 }
 
