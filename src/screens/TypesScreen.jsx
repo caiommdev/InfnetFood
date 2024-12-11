@@ -22,6 +22,7 @@ function TypesScreen({ route }) {
                     </TouchableOpacity>
                 )}
                 keyExtractor={(item) => item.name}
+                contentContainerStyle={styles.listContent}
             />
         </View>
     );
@@ -39,17 +40,22 @@ const styles = StyleSheet.create({
     darkContainer: {
         backgroundColor: ColourPalet.text,
     },
+    listContent: {
+        paddingVertical: 20,
+    },
     button: {
         backgroundColor: ColourPalet.highlight,
-        padding: 10,
-        marginVertical: 5,
-        borderRadius: 5,
-        width: '80%',
+        paddingVertical: 20,
+        paddingHorizontal: 40,
+        marginVertical: 10,
+        borderRadius: 10,
+        width: '90%',
         alignItems: 'center',
     },
     buttonText: {
         color: ColourPalet.textSecondary,
-        fontSize: 16,
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 });
 
