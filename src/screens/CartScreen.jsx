@@ -1,8 +1,20 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 
-function CartScreen({ cart }) {
+function CartScreen({ navigation, cart, setOrderList, orderList }) {
     const total = cart.reduce((sum, product) => sum + product.price, 0);
+
+    const handlePlaceOrder = () => {
+        const order = {
+            id: orderList.length + 1,
+            items: cart,
+            total: total,
+            date: new Date().toLocaleString(),
+        };
+
+        setOrderList([...orderList, order]);
+        navigation.navigate('Orders');
+    };
 
     return (
         <View style={styles.container}>
@@ -16,9 +28,11 @@ function CartScreen({ cart }) {
                 )}
                 keyExtractor={(item) => item.name}
             />
-            <View style={styles.totalContainer}>
-                <Text style={styles.totalText}>Total: R$ {total.toFixed(2)}</Text>
-            </View>
+            <TouchableOpacity onPress={handlePlaceOrder}>
+                <View style={styles.totalContainer}>
+                    <Text style={styles.totalText}>Total: R$ {total.toFixed(2)}</Text>
+                </View>
+            </TouchableOpacity>
         </View>
     );
 }

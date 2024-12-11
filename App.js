@@ -10,6 +10,7 @@ import TypesScreen from './src/screens/TypesScreen';
 import ProductsScreen from './src/screens/ProductsScreens';
 import CartScreen from './src/screens/CartScreen';
 import Profile from './src/screens/Profile';
+import Orders from './src/screens/Orders';
 import Header from './src/components/Header';
 
 const AppStack = createStackNavigator();
@@ -28,6 +29,7 @@ const types = [
 
 export default function App() {
   const [cart, setCart] = useState([]);
+  const [orderList, setOrderList] = useState([]);
 
   return (
     <NavigationContainer>
@@ -50,9 +52,12 @@ export default function App() {
                 {props => <ProductsScreen {...props} cart={cart} setCart={setCart} />}
             </AppStack.Screen>
             <AppStack.Screen name="Cart">
-                {props => <CartScreen {...props} cart={cart} />}
+                {props => <CartScreen {...props} cart={cart} setOrderList={setOrderList} orderList={orderList} />}
             </AppStack.Screen>
             <AppStack.Screen name="Profile" component={Profile} />
+            <AppStack.Screen name="Orders">
+                {props => <Orders {...props} orderList={orderList} />}
+            </AppStack.Screen>
         </AppStack.Navigator>
     </NavigationContainer>
   );
