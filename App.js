@@ -13,6 +13,7 @@ import Profile from './src/screens/Profile';
 import Orders from './src/screens/Orders';
 import MapScreen from './src/screens/MapScreen';
 import RestaurantDetailsScreen from './src/screens/RestaurantDetailsScreen';
+import CheckoutScreen from './src/screens/CheckoutScreen';
 import Header from './src/components/Header';
 
 const AppStack = createStackNavigator();
@@ -62,6 +63,7 @@ export default function App() {
             </AppStack.Screen>
             <AppStack.Screen name="Map" component={MapScreen} />
             <AppStack.Screen name="RestaurantDetails" component={RestaurantDetailsScreen} />
+            <AppStack.Screen name="Checkout" component={CheckoutScreen} />
         </AppStack.Navigator>
     </NavigationContainer>
   );

@@ -1,29 +1,29 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 
-function Orders({ orderList }) {
-    //const { orderList } = route.params;
-    console.log(orderList);
+function Orders({ navigation, orderList }) {
     return (
         <View style={styles.container}>
             <FlatList
                 data={orderList}
                 renderItem={({ item }) => (
-                    <View style={styles.orderContainer}>
-                        <Text style={styles.orderTitle}>Pedido #{item.id}</Text>
-                        <Text style={styles.orderDate}>{item.date}</Text>
-                        <FlatList
-                            data={item.items}
-                            renderItem={({ item }) => (
-                                <View style={styles.productContainer}>
-                                    <Text style={styles.productName}>{item.name}</Text>
-                                    <Text style={styles.productPrice}>R$ {item.price.toFixed(2)}</Text>
-                                </View>
-                            )}
-                            keyExtractor={(item) => item.name}
-                        />
-                        <Text style={styles.orderTotal}>Total: R$ {item.total.toFixed(2)}</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('Checkout')}>
+                        <View style={styles.orderContainer}>
+                            <Text style={styles.orderTitle}>Pedido #{item.id}</Text>
+                            <Text style={styles.orderDate}>{item.date}</Text>
+                            <FlatList
+                                data={item.items}
+                                renderItem={({ item }) => (
+                                    <View style={styles.productContainer}>
+                                        <Text style={styles.productName}>{item.name}</Text>
+                                        <Text style={styles.productPrice}>R$ {item.price.toFixed(2)}</Text>
+                                    </View>
+                                )}
+                                keyExtractor={(item) => item.name}
+                            />
+                            <Text style={styles.orderTotal}>Total: R$ {item.total.toFixed(2)}</Text>
+                        </View>
+                    </TouchableOpacity>
                 )}
                 keyExtractor={(item) => item.id.toString()}
             />
