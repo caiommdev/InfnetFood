@@ -1,8 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import React, { useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 
 import Home from './src/screens/Home';
 import Login from './src/screens/Login';
@@ -17,6 +16,7 @@ import CheckoutScreen from './src/screens/CheckoutScreen';
 import Header from './src/components/Header';
 
 const AppStack = createStackNavigator();
+const AuthStack = createStackNavigator();
 
 const types = [
   { name: "Lanches" },
@@ -33,47 +33,50 @@ const types = [
 export default function App() {
   const [cart, setCart] = useState([]);
   const [orderList, setOrderList] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = (username, password) => {
+    // Simulate login with mock data
+    if (username === 'user' && password === 'password') {
+      setIsLoggedIn(true);
+    } else {
+      alert('Invalid credentials');
+    }
+  };
 
   return (
     <NavigationContainer>
+      {isLoggedIn ? (
         <AppStack.Navigator
-            screenOptions={{
-                headerRight: () => <Header cart={cart} />,
-            }}
+          screenOptions={{
+            headerRight: () => <Header cart={cart} />,
+          }}
         >
-            <AppStack.Screen name="Home" component={Home} />
-            <AppStack.Screen name="Login" component={Login} />
-            <AppStack.Screen 
-                name="Types" 
-                initialParams={{ types }} 
-            >
-                {props => <TypesScreen {...props} cart={cart} setCart={setCart} />}
-            </AppStack.Screen>
-            <AppStack.Screen 
-                name="Products"
-            >
-                {props => <ProductsScreen {...props} cart={cart} setCart={setCart} />}
-            </AppStack.Screen>
-            <AppStack.Screen name="Cart">
-                {props => <CartScreen {...props} cart={cart} setOrderList={setOrderList} orderList={orderList} />}
-            </AppStack.Screen>
-            <AppStack.Screen name="Profile" component={Profile} />
-            <AppStack.Screen name="Orders">
-                {props => <Orders {...props} orderList={orderList} />}
-            </AppStack.Screen>
-            <AppStack.Screen name="Map" component={MapScreen} />
-            <AppStack.Screen name="RestaurantDetails" component={RestaurantDetailsScreen} />
-            <AppStack.Screen name="Checkout" component={CheckoutScreen} />
+          <AppStack.Screen name="Types" initialParams={{ types }}>
+            {props => <TypesScreen {...props} cart={cart} setCart={setCart} />}
+          </AppStack.Screen>
+          <AppStack.Screen name="Products">
+            {props => <ProductsScreen {...props} cart={cart} setCart={setCart} />}
+          </AppStack.Screen>
+          <AppStack.Screen name="Cart">
+            {props => <CartScreen {...props} cart={cart} setOrderList={setOrderList} orderList={orderList} />}
+          </AppStack.Screen>
+          <AppStack.Screen name="Profile" component={Profile} />
+          <AppStack.Screen name="Orders">
+            {props => <Orders {...props} orderList={orderList} />}
+          </AppStack.Screen>
+          <AppStack.Screen name="Map" component={MapScreen} />
+          <AppStack.Screen name="RestaurantDetails" component={RestaurantDetailsScreen} />
+          <AppStack.Screen name="Checkout" component={CheckoutScreen} />
         </AppStack.Navigator>
+      ) : (
+        <AuthStack.Navigator>
+          <AuthStack.Screen name="Home" component={Home} />
+          <AuthStack.Screen name="Login">
+            {props => <Login {...props} handleLogin={handleLogin} />}
+          </AuthStack.Screen>
+        </AuthStack.Navigator>
+      )}
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

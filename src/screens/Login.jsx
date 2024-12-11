@@ -12,36 +12,23 @@ import {
   Platform
 } from "react-native";
 import ColourPalet from "../AppColours/ColourPalete";
-//import UserService from "../services/UserService";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
-function Login({ navigation}) {
-  //const { handleLogin } = useRoute().params;
+function Login({ navigation, handleLogin }) {
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
 
   const handleSubmit = async () => {
     try {
-      //const user = await UserService.getUser(email);
-      const user = {
-        email: "",
-        password: ""
-      }
-      
-      if (!user || user.password){//user.password !== password) {
+      // Simulate login with mock data
+      if (email === 'user' && password === 'password') {
+        handleLogin(email, password);
+        //navigation.navigate("Types");
+      } else {
         Alert.alert("Erro", "Usuário ou senha incorretos");
-        return;
       }
-      else {
-        Alert.alert("Sucesso", "Login efetuado com sucesso");
-      }
-      
-      navigation.navigate("Types");
-      //handleLogin(user);
-      //navigation.navigate("FilmList");
-      
     } catch (error) {
       Alert.alert("Erro", "Erro ao fazer login");
     }
@@ -53,12 +40,6 @@ function Login({ navigation}) {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
-        {/* <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => navigation.navigate('Home')}
-        >
-          <MaterialIcons name="arrow-back" size={28} color={ColourPalet.highlight} />
-        </TouchableOpacity> */}
         <View style={styles.formContainer}>
           <Text style={styles.title}>Login</Text>
           
