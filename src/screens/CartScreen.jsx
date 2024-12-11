@@ -1,7 +1,9 @@
-import React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import LottieView from 'lottie-react-native';
 
 function CartScreen({ navigation, cart, setOrderList, orderList }) {
+    const [animationVisible, setAnimationVisible] = useState(false);
     const total = cart.reduce((sum, product) => sum + product.price, 0);
 
     const handlePlaceOrder = () => {
@@ -13,7 +15,11 @@ function CartScreen({ navigation, cart, setOrderList, orderList }) {
         };
 
         setOrderList([...orderList, order]);
-        navigation.navigate('Orders');
+        setAnimationVisible(true);
+        setTimeout(() => {
+            setAnimationVisible(false);
+            navigation.navigate('Orders');
+        }, 1500);
     };
 
     return (
@@ -77,6 +83,16 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
+    },
+    animationContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    animation: {
+        width: 150,
+        height: 150,
     },
 });
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import { View, Text, TextInput, Button, StyleSheet, Alert, Modal } from 'react-native';
+import LottieView from 'lottie-react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 
 const CheckoutScreen = ({ navigation }) => {
@@ -10,6 +10,7 @@ const CheckoutScreen = ({ navigation }) => {
     const [complement, setComplement] = useState('');
     const [neighborhood, setNeighborhood] = useState('');
     const [zipCode, setZipCode] = useState('');
+    const [animationVisible, setAnimationVisible] = useState(false);
 
     const paymentMethods =[ 
             { key: 'Dinheiro', value: 'dinheiro' },
@@ -36,24 +37,16 @@ const CheckoutScreen = ({ navigation }) => {
             },
         };
 
-        // Navigate to Orders screen
-        navigation.navigate('Types');
+        setAnimationVisible(true);
+        setTimeout(() => {
+            setAnimationVisible(false);
+            navigation.navigate('Types');
+        }, 1500);
     };
 
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Forma de Pagamento</Text>
-            {/* <RNPickerSelect
-                onValueChange={(value) => setPaymentMethod(value)}
-                items={[
-                    { label: 'Dinheiro', value: 'dinheiro' },
-                    { label: 'Crédito', value: 'credito' },
-                    { label: 'Débito', value: 'debito' },
-                    { label: 'Pix', value: 'pix' },
-                ]}
-                style={pickerSelectStyles}
-                placeholder={{ label: 'Selecione uma forma de pagamento', value: '' }}
-            /> */}
             <SelectList data={paymentMethods} setSelected={setselectedPaymentMethod}/>
 
             <Text style={styles.label}>Rua</Text>
@@ -92,6 +85,20 @@ const CheckoutScreen = ({ navigation }) => {
             />
 
             <Button title="Finalizar Pedido" onPress={handleCheckout} />
+            <Modal
+                visible={animationVisible}
+                transparent={true}
+                animationType="fade"
+            >
+                <View style={styles.animationContainer}>
+                    <LottieView
+                        source={require('../../assets/animations/order-confirmed.json')}
+                        autoPlay
+                        loop={false}
+                        style={styles.animation}
+                    />
+                </View>
+            </Modal>
         </View>
     );
 };
@@ -113,22 +120,15 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         paddingHorizontal: 10,
     },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-    inputIOS: {
-        height: 40,
-        borderColor: '#ccc',
-        borderWidth: 1,
-        marginBottom: 15,
-        paddingHorizontal: 10,
+    animationContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
-    inputAndroid: {
-        height: 40,
-        borderColor: '#ccc',
-        borderWidth: 1,
-        marginBottom: 15,
-        paddingHorizontal: 10,
+    animation: {
+        width: 150,
+        height: 150,
     },
 });
 
