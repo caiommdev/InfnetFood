@@ -3,7 +3,8 @@ import React from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View, Text } from "react-native";
 
 function TypesScreen({ route, navigation }) {
-    const { types } = route.params;
+    const { types } = route.params || { types: [] }; // Adiciona um fallback para evitar erro
+
     return (
         <View style={styles.container}>
             <FlatList
