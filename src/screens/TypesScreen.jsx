@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import ColourPalet from '../AppColours/ColourPalete';
 
-function TypesScreen({ route, navigation }) {
+function TypesScreen({ route }) {
     const { types } = route.params || { types: [] };
     const { theme } = useTheme();
+    const navigation = useNavigation();
 
     return (
         <View style={[styles.container, theme === 'light' ? styles.lightContainer : styles.darkContainer]}>
