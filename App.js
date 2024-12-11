@@ -13,7 +13,9 @@ import Orders from './src/screens/Orders';
 import MapScreen from './src/screens/MapScreen';
 import RestaurantDetailsScreen from './src/screens/RestaurantDetailsScreen';
 import CheckoutScreen from './src/screens/CheckoutScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
 import Header from './src/components/Header';
+import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 
 const AppStack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -45,38 +47,41 @@ export default function App() {
   };
 
   return (
-    <NavigationContainer>
-      {isLoggedIn ? (
-        <AppStack.Navigator
-          screenOptions={{
-            headerRight: () => <Header cart={cart} />,
-          }}
-        >
-          <AppStack.Screen name="Types" initialParams={{ types }}>
-            {props => <TypesScreen {...props} cart={cart} setCart={setCart} />}
-          </AppStack.Screen>
-          <AppStack.Screen name="Products">
-            {props => <ProductsScreen {...props} cart={cart} setCart={setCart} />}
-          </AppStack.Screen>
-          <AppStack.Screen name="Cart">
-            {props => <CartScreen {...props} cart={cart} setOrderList={setOrderList} orderList={orderList} />}
-          </AppStack.Screen>
-          <AppStack.Screen name="Profile" component={Profile} />
-          <AppStack.Screen name="Orders">
-            {props => <Orders {...props} orderList={orderList} />}
-          </AppStack.Screen>
-          <AppStack.Screen name="Map" component={MapScreen} />
-          <AppStack.Screen name="RestaurantDetails" component={RestaurantDetailsScreen} />
-          <AppStack.Screen name="Checkout" component={CheckoutScreen} />
-        </AppStack.Navigator>
-      ) : (
-        <AuthStack.Navigator>
-          <AuthStack.Screen name="Home" component={Home} />
-          <AuthStack.Screen name="Login">
-            {props => <Login {...props} handleLogin={handleLogin} />}
-          </AuthStack.Screen>
-        </AuthStack.Navigator>
-      )}
-    </NavigationContainer>
+    <ThemeProvider>
+      <NavigationContainer>
+        {isLoggedIn ? (
+          <AppStack.Navigator
+            screenOptions={{
+              headerRight: () => <Header cart={cart} />,
+            }}
+          >
+            <AppStack.Screen name="Types" initialParams={{ types }}>
+              {props => <TypesScreen {...props} cart={cart} setCart={setCart} />}
+            </AppStack.Screen>
+            <AppStack.Screen name="Products">
+              {props => <ProductsScreen {...props} cart={cart} setCart={setCart} />}
+            </AppStack.Screen>
+            <AppStack.Screen name="Cart">
+              {props => <CartScreen {...props} cart={cart} setOrderList={setOrderList} orderList={orderList} />}
+            </AppStack.Screen>
+            <AppStack.Screen name="Profile" component={Profile} />
+            <AppStack.Screen name="Orders">
+              {props => <Orders {...props} orderList={orderList} />}
+            </AppStack.Screen>
+            <AppStack.Screen name="Map" component={MapScreen} />
+            <AppStack.Screen name="Restaurant" component={RestaurantDetailsScreen} />
+            <AppStack.Screen name="Checkout" component={CheckoutScreen} />
+            <AppStack.Screen name="Settings" component={SettingsScreen} />
+          </AppStack.Navigator>
+        ) : (
+          <AuthStack.Navigator>
+            <AuthStack.Screen name="Home" component={Home} />
+            <AuthStack.Screen name="Login">
+              {props => <Login {...props} handleLogin={handleLogin} />}
+            </AuthStack.Screen>
+          </AuthStack.Navigator>
+        )}
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }

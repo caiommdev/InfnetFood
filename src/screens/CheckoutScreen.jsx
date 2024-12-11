@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, Modal } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
+import ColourPalet from '../AppColours/ColourPalete';
+import { useTheme } from '../context/ThemeContext';
 
 const CheckoutScreen = ({ navigation }) => {
+    const { theme } = useTheme();
     const [selectedPaymentMethod, setselectedPaymentMethod] = useState('');
     const [street, setStreet] = useState('');
     const [number, setNumber] = useState('');
@@ -45,41 +48,44 @@ const CheckoutScreen = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.label}>Forma de Pagamento</Text>
-            <SelectList data={paymentMethods} setSelected={setselectedPaymentMethod}/>
+        <View style={[styles.container, theme === 'light' ? styles.lightContainer : styles.darkContainer]}>
+            <Text style={[styles.label, theme === 'light' ? styles.lightText : styles.darkText]}>Forma de Pagamento</Text>
+            <SelectList 
+                data={paymentMethods} 
+                setSelected={setselectedPaymentMethod }
+                dropdownTextStyles={[theme === 'light' ? {color: ColourPalet.text} : {color: ColourPalet.textSecondary}]}/>
 
-            <Text style={styles.label}>Rua</Text>
+            <Text style={[styles.label, theme === 'light' ? styles.lightText : styles.darkText]}>Rua</Text>
             <TextInput
-                style={styles.input}
+                style={[styles.input, theme === 'light' ? styles.lightInput : styles.darkInput]}
                 value={street}
                 onChangeText={setStreet}
             />
 
-            <Text style={styles.label}>Número</Text>
+            <Text style={[styles.label, theme === 'light' ? styles.lightText : styles.darkText]}>Número</Text>
             <TextInput
-                style={styles.input}
+                style={[styles.input, theme === 'light' ? styles.lightInput : styles.darkInput]}
                 value={number}
                 onChangeText={setNumber}
             />
 
-            <Text style={styles.label}>Complemento (opcional)</Text>
+            <Text style={[styles.label, theme === 'light' ? styles.lightText : styles.darkText]}>Complemento (opcional)</Text>
             <TextInput
-                style={styles.input}
+                style={[styles.input, theme === 'light' ? styles.lightInput : styles.darkInput]}
                 value={complement}
                 onChangeText={setComplement}
             />
 
-            <Text style={styles.label}>Bairro</Text>
+            <Text style={[styles.label, theme === 'light' ? styles.lightText : styles.darkText]}>Bairro</Text>
             <TextInput
-                style={styles.input}
+                style={[styles.input, theme === 'light' ? styles.lightInput : styles.darkInput]}
                 value={neighborhood}
                 onChangeText={setNeighborhood}
             />
 
-            <Text style={styles.label}>CEP</Text>
+            <Text style={[styles.label, theme === 'light' ? styles.lightText : styles.darkText]}>CEP</Text>
             <TextInput
-                style={styles.input}
+                style={[styles.input, theme === 'light' ? styles.lightInput : styles.darkInput]}
                 value={zipCode}
                 onChangeText={setZipCode}
             />
@@ -107,18 +113,38 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#f5f5f5',
+    },
+    lightContainer: {
+        backgroundColor: ColourPalet.primary,
+    },
+    darkContainer: {
+        backgroundColor: ColourPalet.text,
     },
     label: {
         fontSize: 16,
         marginBottom: 5,
     },
+    lightText: {
+        color: ColourPalet.text,
+    },
+    darkText: {
+        color: ColourPalet.textSecondary,
+    },
     input: {
         height: 40,
-        borderColor: '#ccc',
         borderWidth: 1,
         marginBottom: 15,
         paddingHorizontal: 10,
+    },
+    lightInput: {
+        borderColor: '#ccc',
+        backgroundColor: ColourPalet.primary,
+        color: ColourPalet.text,
+    },
+    darkInput: {
+        borderColor: '#555',
+        backgroundColor: ColourPalet.text,
+        color: ColourPalet.textSecondary,
     },
     animationContainer: {
         flex: 1,

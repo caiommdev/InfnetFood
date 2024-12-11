@@ -1,12 +1,14 @@
-import { useRoute } from '@react-navigation/native';
 import React from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { View, FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { useTheme } from '../context/ThemeContext';
+import ColourPalet from '../AppColours/ColourPalete';
 
 function TypesScreen({ route, navigation }) {
-    const { types } = route.params || { types: [] }; // Adiciona um fallback para evitar erro
+    const { types } = route.params || { types: [] };
+    const { theme } = useTheme();
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, theme === 'light' ? styles.lightContainer : styles.darkContainer]}>
             <FlatList
                 data={types}
                 renderItem={({ item }) => (
@@ -28,10 +30,15 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f5f5f5',
+    },
+    lightContainer: {
+        backgroundColor: ColourPalet.primary,
+    },
+    darkContainer: {
+        backgroundColor: ColourPalet.text,
     },
     button: {
-        backgroundColor: '#007BFF',
+        backgroundColor: ColourPalet.highlight,
         padding: 10,
         marginVertical: 5,
         borderRadius: 5,
@@ -39,7 +46,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonText: {
-        color: '#fff',
+        color: ColourPalet.textSecondary,
         fontSize: 16,
     },
 });

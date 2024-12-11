@@ -3,22 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 
 import ColourPalet from "../AppColours/ColourPalete";
+import { useTheme } from '../context/ThemeContext';
 //import UserService from '../services/UserService';
 
 export default function Profile() {
+    const { theme } = useTheme();
     const username = "username";
     const email = "username@email.com";
     const [image, setImage] = useState(null);
-
-    // useEffect(() => {
-    //     const fetchUserImage = async () => {
-    //         const user = await UserService.getUser(email);
-    //         if (user && user.image) {
-    //             setImage(user.image);
-    //         }
-    //     };
-    //     fetchUserImage();
-    // }, [email]);
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -35,15 +27,15 @@ export default function Profile() {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>User Profile</Text>
+        <View style={[styles.container, theme === 'light' ? styles.lightContainer : styles.darkContainer]}>
+            <Text style={[styles.title, theme === 'light' ? styles.lightText : styles.darkText]}>User Profile</Text>
             {image && <Image source={{ uri: image }} style={styles.profileImage} />}
             <TouchableOpacity style={styles.button} onPress={pickImage}>
                 <Text style={styles.buttonText}>Upload Photo</Text>
             </TouchableOpacity>
             <View style={styles.userInfo}>
-                <Text style={styles.infoText}>Username: {username}</Text>
-                <Text style={styles.infoText}>Email: {email}</Text>
+                <Text style={[styles.infoText, theme === 'light' ? styles.lightText : styles.darkText]}>Username: {username}</Text>
+                <Text style={[styles.infoText, theme === 'light' ? styles.lightText : styles.darkText]}>Email: {email}</Text>
             </View>
         </View>
     );
@@ -55,13 +47,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
+    },
+    lightContainer: {
         backgroundColor: ColourPalet.primary,
+    },
+    darkContainer: {
+        backgroundColor: ColourPalet.text,
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
-        color: ColourPalet.highlight,
+    },
+    lightText: {
+        color: ColourPalet.text,
+    },
+    darkText: {
+        color: ColourPalet.textSecondary,
     },
     profileImage: {
         width: 100,
@@ -89,6 +91,5 @@ const styles = StyleSheet.create({
     infoText: {
         fontSize: 16,
         marginVertical: 5,
-        color: ColourPalet.text,
     },
 });

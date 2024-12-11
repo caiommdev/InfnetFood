@@ -17,6 +17,9 @@ const Header = ({ cart }) => {
             <TouchableOpacity onPress={() => navigation.navigate('Map')}>
                 <Ionicons name="map" size={24} color="black" style={styles.icon} />
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+                <Ionicons name="settings" size={24} color="black" style={styles.icon} />
+            </TouchableOpacity>
         </View>
     );
 };

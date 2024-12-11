@@ -36,7 +36,7 @@ const Map = () => {
                     coordinate={{ latitude: restaurant.lat, longitude: restaurant.lng }}
                     title={restaurant.name}
                 >
-                    <Callout onPress={() => navigation.navigate('RestaurantDetails', { restaurant })}>
+                    <Callout onPress={() => navigation.navigate('Restaurant', { restaurant })}>
                         <View>
                             <Text style={styles.name}>{restaurant.name}</Text>
                             <Text>{restaurant.address}</Text>
