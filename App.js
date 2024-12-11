@@ -11,6 +11,7 @@ import ProductsScreen from './src/screens/ProductsScreens';
 import CartScreen from './src/screens/CartScreen';
 import Profile from './src/screens/Profile';
 import Orders from './src/screens/Orders';
+import MapScreen from './src/screens/MapScreen';
 import Header from './src/components/Header';
 
 const AppStack = createStackNavigator();
@@ -58,6 +59,7 @@ export default function App() {
             <AppStack.Screen name="Orders">
                 {props => <Orders {...props} orderList={orderList} />}
             </AppStack.Screen>
+            <AppStack.Screen name="Map" component={MapScreen} />
         </AppStack.Navigator>
     </NavigationContainer>
   );
