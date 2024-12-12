@@ -53,6 +53,8 @@ export default function App() {
           <AppStack.Navigator
             screenOptions={{
               headerRight: () => <Header cart={cart} />,
+              headerStyle:{backgroundColor: ColourPalet.secondary},
+              headerTintColor: ColourPalet.text
             }}
           >
             <AppStack.Screen name="Types" initialParams={{ types }}>
