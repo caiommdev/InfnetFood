@@ -14,7 +14,7 @@ Antes de começar, certifique-se de ter o seguinte instalado:
 1. Clone o repositório:
 
 ```sh
-git clone https://github.com/seu-usuario/infnetfood.git
+git clone https://github.com/caiommdev/InfnetFood.git
 cd infnetfood
 ```
 
